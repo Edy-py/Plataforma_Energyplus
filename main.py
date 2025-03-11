@@ -10,6 +10,7 @@ st.set_page_config(page_title="EnergyPlus Runner", layout="centered")
 
 st.title("🏠 EnergyPlus Simulation")
 
+# Criar diretório de saída
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -38,11 +39,10 @@ idf_file = st.file_uploader("Envie o arquivo .idf", type=["idf"])
 epw_file = st.file_uploader("Envie o arquivo .epw", type=["epw"])
 print(idd_path)
 
-# Criar diretório de saída
 
 
-# Se os arquivos IDF e EPW forem carregados
-if idf_file and epw_file:
+# Se os arquivos IDF e EPW e IDD forem carregados
+if idf_file and epw_file and idd_path:
     # Salvar os arquivos localmente
     idf_path = os.path.join(output_dir, "input.idf")
     epw_path = os.path.join(output_dir, "weather.epw")
