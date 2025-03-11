@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import requests
 from eppy.modeleditor import IDF
 
 # Configuração da Página
@@ -11,13 +12,32 @@ st.title("🏠 EnergyPlus Simulation")
 # Upload dos arquivos
 idf_file = st.file_uploader("Envie o arquivo .idf", type=["idf"])
 epw_file = st.file_uploader("Envie o arquivo .epw", type=["epw"])
-idd_file = st.file_uploader("Envie o arquivo .idd", type=["idd"])
 
 # Criar diretório de saída
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
-# Se ambos os arquivos forem carregados
+@st.cache_data
+def get_idd():
+    # URL do arquivo .idd
+    idd_url = "https://raw.githubusercontent.com/NREL/EnergyPlus/refs/heads/develop/idd/versions/V24-1-0-Energy%2B.idd"
+
+    # Baixar o arquivo .idd
+    idd_path = os.path.join(output_dir, "energyplus.idd")
+
+    if not os.path.exists(idd_path):
+        st.write("Baixando o arquivo .idd...")
+        response = requests.get(idd_url)
+        if response.status_code == 200:
+            with open(idd_path, "wb") as f:
+                f.write(response.content)
+            st.success("Arquivo .idd baixado com sucesso!")
+        else:
+            st.error(f"Erro ao baixar o arquivo .idd. Status: {response.status_code}")
+    return idd_path
+
+idd_path = get_idd()
+# Se os arquivos IDF e EPW forem carregados
 if idf_file and epw_file:
     # Salvar os arquivos localmente
     idf_path = os.path.join(output_dir, "input.idf")
@@ -31,24 +51,21 @@ if idf_file and epw_file:
 
     st.success("Arquivos carregados com sucesso!")
 
-    # Botão para rodar o EnergyPlus
+    # Botão para rodar a simulação
     if st.button("🔄 Rodar Simulação"):
         try:
             with st.spinner("Executando EnergyPlus..."):
                 # Carregar o IDF com eppy
-                # Configure o caminho para o arquivo IDD
-                IDF.setiddname(idd_file)  
-                
-                # Carregar o arquivo IDF
+                IDF.setiddname(idd_path)  # Usando o caminho do arquivo .idd baixado
+
+                # Carregar o arquivo IDF e EPW
                 idf = IDF(idf_path,epw_path)
                 
-                # Agora vamos executar o EnergyPlus diretamente com subprocess, mas sem usar subprocess diretamente
-                result = idf.run(expandobjects = True, readvars = True, output_directory = output_dir)
-                print(result)
-                if result == None:
-                    st.success("Simulação concluída com sucesso!")
-                else:
-                    st.error(f"Erro ao executar EnergyPlus. Código de erro: {result}")
+                
+                # Executar a simulação
+                idf.run(expandobjects=True, readvars=True, output_directory=output_dir)
+                
+                st.success("Simulação concluída com sucesso!")
 
         except Exception as e:
             st.error(f"Erro ao executar EnergyPlus: {str(e)}")
