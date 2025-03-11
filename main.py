@@ -11,6 +11,7 @@ st.title("🏠 EnergyPlus Simulation")
 # Upload dos arquivos
 idf_file = st.file_uploader("Envie o arquivo .idf", type=["idf"])
 epw_file = st.file_uploader("Envie o arquivo .epw", type=["epw"])
+idd_file = st.file_uploader("Envie o arquivo .idd", type=["idd"])
 
 # Criar diretório de saída
 output_dir = "output"
@@ -36,7 +37,7 @@ if idf_file and epw_file:
             with st.spinner("Executando EnergyPlus..."):
                 # Carregar o IDF com eppy
                 # Configure o caminho para o arquivo IDD
-                IDF.setiddname("C:/EnergyPlusV24-1-0/PreProcess/IDFVersionUpdater/V24-1-0-Energy+.idd")  # Defina o caminho do arquivo IDD corretamente
+                IDF.setiddname(idd_file)  
                 
                 # Carregar o arquivo IDF
                 idf = IDF(idf_path,epw_path)
