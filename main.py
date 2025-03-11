@@ -4,6 +4,15 @@ import os
 import requests
 from eppy.modeleditor import IDF
 
+
+# Configuração da Página
+st.set_page_config(page_title="EnergyPlus Runner", layout="centered")
+
+st.title("🏠 EnergyPlus Simulation")
+
+output_dir = "output"
+os.makedirs(output_dir, exist_ok=True)
+
 @st.cache_data
 def get_idd():
     # URL do arquivo .idd
@@ -23,19 +32,13 @@ def get_idd():
             st.error(f"Erro ao baixar o arquivo .idd. Status: {response.status_code}")
     return idd_path
 
-# Configuração da Página
-st.set_page_config(page_title="EnergyPlus Runner", layout="centered")
-
-st.title("🏠 EnergyPlus Simulation")
-
 # Upload dos arquivos
 idf_file = st.file_uploader("Envie o arquivo .idf", type=["idf"])
 epw_file = st.file_uploader("Envie o arquivo .epw", type=["epw"])
 idd_path = get_idd()
 
+
 # Criar diretório de saída
-output_dir = "output"
-os.makedirs(output_dir, exist_ok=True)
 
 
 # Se os arquivos IDF e EPW forem carregados
