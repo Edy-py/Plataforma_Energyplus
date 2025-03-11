@@ -41,8 +41,8 @@ print(idd_path)
 
 
 
-# Se os arquivos IDF e EPW e IDD forem carregados
-if idf_file and epw_file and idd_path:
+# Se os arquivos IDF e EPW  forem carregados
+if idf_file and epw_file:
     # Salvar os arquivos localmente
     idf_path = os.path.join(output_dir, "input.idf")
     epw_path = os.path.join(output_dir, "weather.epw")
