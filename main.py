@@ -33,10 +33,10 @@ def get_idd():
     return idd_path
 
 # Upload dos arquivos
+idd_path = get_idd()
 idf_file = st.file_uploader("Envie o arquivo .idf", type=["idf"])
 epw_file = st.file_uploader("Envie o arquivo .epw", type=["epw"])
-idd_path = get_idd()
-
+print(idd_path)
 
 # Criar diretório de saída
 
