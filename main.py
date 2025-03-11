@@ -13,7 +13,7 @@ st.title("🏠 EnergyPlus Simulation")
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
-@st.cache_data
+
 def get_idd():
     # URL do arquivo .idd
     idd_url = "https://raw.githubusercontent.com/NREL/EnergyPlus/refs/heads/develop/idd/versions/V24-1-0-Energy%2B.idd"
