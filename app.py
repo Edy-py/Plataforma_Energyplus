@@ -1,43 +1,65 @@
-from flask import Flask, request, jsonify, send_file
+import streamlit as st
 import os
 import subprocess
 
-app = Flask(__name__)
+# Configuração do Streamlit
+st.title("🏠 EnergyPlus Simulation via Streamlit")
 
+# Criar diretórios para uploads e saída
 UPLOAD_FOLDER = "uploads"
 OUTPUT_FOLDER = "output"
-
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-@app.route("/run-energyplus", methods=["POST"])
-def run_energyplus():
-    if "idf" not in request.files or "epw" not in request.files:
-        return jsonify({"error": "Arquivos .idf e .epw são obrigatórios!"}), 400
+# Upload dos arquivos
+idf_file = st.file_uploader("Envie o arquivo .idf", type=["idf"])
+epw_file = st.file_uploader("Envie o arquivo .epw", type=["epw"])
 
-    idf_file = request.files["idf"]
-    epw_file = request.files["epw"]
+if idf_file and epw_file:
+    st.success("Arquivos carregados com sucesso!")
 
+    # Salvar os arquivos enviados
     idf_path = os.path.join(UPLOAD_FOLDER, "input.idf")
     epw_path = os.path.join(UPLOAD_FOLDER, "weather.epw")
 
-    idf_file.save(idf_path)
-    epw_file.save(epw_path)
+    with open(idf_path, "wb") as f:
+        f.write(idf_file.getbuffer())
 
-    try:
-        # Rodar EnergyPlus
-        command = ["EnergyPlus", "-r", "-d", OUTPUT_FOLDER, "-w", epw_path, idf_path]
-        result = subprocess.run(command, capture_output=True, text=True)
+    with open(epw_path, "wb") as f:
+        f.write(epw_file.getbuffer())
 
-        if result.returncode != 0:
-            return jsonify({"error": f"Erro ao rodar EnergyPlus: {result.stderr}"}), 500
+    # Botão para rodar a simulação
+    if st.button("🔄 Rodar Simulação"):
+        with st.spinner("Executando EnergyPlus..."):
+            try:
+                # Comando para rodar o EnergyPlus
+                command = [
+                    "EnergyPlus",
+                    "-r",
+                    "-d", OUTPUT_FOLDER,
+                    "-w", epw_path,
+                    idf_path
+                ]
 
-        # Enviar o arquivo de saída
-        output_csv = os.path.join(OUTPUT_FOLDER, "eplusout.csv")
-        return send_file(output_csv, as_attachment=True, download_name="resultados.csv")
+                # Executar o EnergyPlus
+                result = subprocess.run(command, capture_output=True, text=True)
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+                if result.returncode != 0:
+                    st.error(f"Erro ao rodar EnergyPlus: {result.stderr}")
+                else:
+                    st.success("Simulação concluída com sucesso!")
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+                    # Exibir o arquivo de saída para download
+                    output_csv = os.path.join(OUTPUT_FOLDER, "eplusout.csv")
+                    if os.path.exists(output_csv):
+                        with open(output_csv, "rb") as f:
+                            st.download_button(
+                                label="📥 Baixar Resultados",
+                                data=f,
+                                file_name="resultados.csv",
+                                mime="text/csv"
+                            )
+                    else:
+                        st.error("Arquivo de resultados não encontrado.")
+            except Exception as e:
+                st.error(f"Erro ao executar EnergyPlus: {str(e)}")

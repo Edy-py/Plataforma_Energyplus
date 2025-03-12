@@ -6,14 +6,14 @@ RUN apt-get update && apt-get install -y python3 python3-pip
 # Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos do projeto para o container
+# Copiar arquivos do projeto
 COPY . /app
 
-# Instalar dependências Python (Flask)
-RUN pip3 install --no-cache-dir flask
+# Instalar dependências
+RUN pip3 install --no-cache-dir streamlit
 
-# Expor a porta do Flask
-EXPOSE 5000
+# Expor a porta do Streamlit
+EXPOSE 8501
 
-# Comando para rodar a API Flask
-CMD ["python3", "server.py"]
+# Comando para rodar o Streamlit
+CMD ["streamlit", "run", "app.py", "--server.address=0.0.0.0"]
