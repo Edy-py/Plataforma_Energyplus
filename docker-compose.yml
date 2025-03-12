@@ -1,7 +1,7 @@
 services:
   energyplus-api:
     image: nrel/energyplus:latest  # Usa a imagem oficial do EnergyPlus
-    container_name: energyplus_service
+    container_name: energyplus_server
     working_dir: /app
     volumes:
       - .:/app  # Monta o diretório local no container
