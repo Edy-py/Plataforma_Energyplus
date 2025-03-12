@@ -1,0 +1,13 @@
+services:
+  energyplus-api:
+    image: nrel/energyplus:latest  # Usa a imagem oficial do EnergyPlus
+    container_name: energyplus_service
+    working_dir: /app
+    volumes:
+      - .:/app  # Monta o diretório local no container
+    ports:
+      - "5000:5000"  # Expõe a API na porta 5000
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "pip install --no-cache-dir flask && python server.py"
