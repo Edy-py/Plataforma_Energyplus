@@ -38,11 +38,14 @@ if idf_file and epw_file:
                     "-r",
                     "-d", OUTPUT_FOLDER,
                     "-w", epw_path,
+                    "--expandobjects",
+                    "--readvars",
                     idf_path
                 ]
 
                 # Executar o EnergyPlus
                 result = subprocess.run(command, capture_output=True, text=True)
+            
 
                 if result.returncode != 0:
                     st.error(f"Erro ao rodar EnergyPlus: {result.stderr}")
