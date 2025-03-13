@@ -10,7 +10,8 @@ WORKDIR /app
 COPY . /app
 
 # Instalar dependências
-RUN pip3 install --no-cache-dir requirements.txt
+RUN pip3 install --no-cache-dir streamlit
+RUN pip3 install --no-cache-dir openpyxl
 
 # Expor a porta do Streamlit
 EXPOSE 8501
