@@ -83,13 +83,12 @@ def calcular_conforto_noturno(arquivo_excel):
 st.title("🏠 EnergyPlus Simulation via Streamlit")
 UPLOAD_FOLDER = "uploads"
 OUTPUT_FOLDER = "output"
-ARQUIVOS_EPW = "arquivo epw"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-# os.makedirs(ARQUIVOS_EPW, exist_ok=True)
+
 
 # Upload de arquivos e seleção de arquivos existentes
-existing_files = os.listdir(ARQUIVOS_EPW)
+existing_files = os.listdir(UPLOAD_FOLDER)
 epw_file = st.selectbox("Escolha um arquivo pré-existente na plataforma:", ["Nenhum arquivo selecionado"] + existing_files)
 
 
