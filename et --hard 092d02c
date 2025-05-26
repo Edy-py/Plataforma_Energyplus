@@ -1,0 +1,42 @@
+[33m2801d39[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~3
+[33m136643c[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{1}: reset: moving to HEAD~1
+[33m092d02c[m HEAD@{2}: commit: aa
+[33m136643c[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{3}: commit (merge): Merge branch 'main' of https://github.com/Edy-py/teste
+[33m1e241fc[m HEAD@{4}: commit: Correção das horas totais da tabela
+[33me648784[m HEAD@{5}: reset: moving to HEAD~1
+[33m41cb480[m HEAD@{6}: commit: atualizando
+[33me648784[m HEAD@{7}: reset: moving to HEAD~2
+[33mfbc6379[m HEAD@{8}: commit: m
+[33m10fbcc3[m HEAD@{9}: commit: atualizando plataforma
+[33me648784[m HEAD@{10}: commit: enviando arquivos epw para o git
+[33m2801d39[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{11}: commit: corrigindo
+[33m414eb43[m HEAD@{12}: commit: corrigindo
+[33m6085afd[m HEAD@{13}: commit: corrigindo
+[33me50e142[m HEAD@{14}: commit: mudando .gitignore
+[33m72e4541[m HEAD@{15}: commit: removi a pasta arquivo epw
+[33m402b81a[m HEAD@{16}: commit: Corrigindo um erro na pasta de arquivos epw
+[33mf1b117f[m HEAD@{17}: commit: atualizanndo o app e add funções(horas de conforto e a possibilidade de escolha do arquivo .epw na plataforma
+[33m5a83c04[m HEAD@{18}: commit: atualizando o dockerfile
+[33m417449f[m HEAD@{19}: commit: mais arquivos da atualização
+[33m92c523d[m HEAD@{20}: commit: melhorando o app
+[33m940072d[m HEAD@{21}: commit: atualizando o app.py para arquivos com HVAC
+[33mc0bbf2b[m HEAD@{22}: commit: atualizando arquivos
+[33m9e297bf[m HEAD@{23}: reset: moving to HEAD
+[33m9e297bf[m HEAD@{24}: commit: aa
+[33m8b7a150[m HEAD@{25}: commit: commit
+[33ma5f043a[m HEAD@{26}: commit: add pasta servidor
+[33m570eb83[m HEAD@{27}: commit: enviando arquivos novamente
+[33m3b087e0[m HEAD@{28}: commit: removendo arquivos
+[33m5fa473c[m HEAD@{29}: commit: e
+[33mf273f8a[m HEAD@{30}: commit: d
+[33m16bc6dd[m HEAD@{31}: commit: c
+[33m75074ca[m HEAD@{32}: commit: b
+[33m2123944[m HEAD@{33}: commit: a
+[33m2096ac8[m HEAD@{34}: commit: atualizando de novo
+[33md01f869[m HEAD@{35}: commit: atualizando
+[33m0d94e22[m HEAD@{36}: commit: alterando main.py
+[33m25eafd5[m HEAD@{37}: commit: atualizando o requiriments
+[33m68aac21[m HEAD@{38}: commit: removendo app.py e add main.py
+[33mb3f8e31[m HEAD@{39}: commit: removendo app.py
+[33m0010a7c[m HEAD@{40}: commit: comiit
+[33m95e54d4[m HEAD@{41}: commit (initial): comiit inicial
