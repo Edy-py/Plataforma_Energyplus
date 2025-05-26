@@ -1,10 +1,11 @@
 services:
   energyplus-app:
     build: .
-    container_name: energyplus_app
+    container_name: energyplus_appp
     working_dir: /app
     volumes:
-      - .:/app
+      - ./volume:/app
+    command: streamlit run expandapp.py
     ports:
       - "8501:8501"
     environment:
