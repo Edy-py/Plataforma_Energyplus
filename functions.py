@@ -112,7 +112,7 @@ def processar_dados_temporais(df, cols_temp):
     return df
 
 # Calcula métricas de conforto térmico
-def calcular_metricas_conforto(data, temp_col, CONFORT_MIN=18, CONFORT_MAX=29, INTERVALO_MINUTOS=15):
+def calcular_metricas_conforto(data, temp_col, CONFORT_MIN, CONFORT_MAX, INTERVALO_MINUTOS=15):
     HORAS_POR_INTERVALO = INTERVALO_MINUTOS / 60
     if data.empty:
         return {k: 0 for k in [
@@ -135,7 +135,7 @@ def calcular_metricas_conforto(data, temp_col, CONFORT_MIN=18, CONFORT_MAX=29, I
     }
 
 # Processa arquivo de temperatura, gera relatório de conforto
-def processar_arquivo_temperatura(df, ano=2025):
+def processar_arquivo_temperatura(df,MIN_TEMP, MAX_TEMP,ano):
     df = formatar_data_hora(df, ano)
     cols_temp = [(col.split(':')[0], col) for col in df.columns if "Mean Air Temperature" in col]
     df = processar_dados_temporais(df, cols_temp)
@@ -147,12 +147,7 @@ def processar_arquivo_temperatura(df, ano=2025):
         mes_nome = calendar.month_name[mes_num]
         dados_mes = df[df['Month'] == mes_num]
         for local, temp_col in cols_temp:
-            if dados_mes.empty or temp_col not in dados_mes.columns:
-                metricas = {k: 0 for k in [
-                    'Total de Horas', 'Conforto (Dia)', 'Conforto (Noite)',
-                    'Total Conforto', 'Sem Conforto', '% Conforto', '% Sem Conforto']}
-            else:
-                metricas = calcular_metricas_conforto(dados_mes, temp_col)
+            metricas = calcular_metricas_conforto(dados_mes, temp_col, MIN_TEMP, MAX_TEMP)
             resultados.append({'Mês': mes_nome, 'Local': local, **metricas})
     relatorio = pd.DataFrame(resultados)
     return relatorio
